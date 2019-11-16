@@ -1,0 +1,285 @@
+body {
+    background-color: #fafafa;
+    color: #757575;
+    font-family: 'Consolas', Arial, Helvetica, sans-serif;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+}
+
+#modal-content {
+    width: 920px;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+}
+
+
+#modal-content #favBtn {
+    display: none;
+}
+
+.close {
+    color: black;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+    position: relative;
+    z-index: 5;
+}
+
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    background: 0 0;
+    border: none;
+    border-radius: 2px;
+    color: #757575;
+    position: relative;
+    height: 36px;
+    margin: 0;
+    min-width: 64px;
+    padding: 0 16px;
+    display: inline-block;
+    font-family: "Consolas","Helvetica","Arial",sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow;
+    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+}
+
+button:hover {
+    background-color: rgba(158,158,158,.2);
+}
+
+button:active {
+    background-color: rgba(158,158,158,.4);
+}
+
+/*button.icon {
+    border-radius: 50%;
+    font-size: 24px;
+    height: 32px;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 32px;
+    width: 32px;
+    padding: 0;
+    overflow: hidden;
+    line-height: normal;
+}*/
+/*
+button .material-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-12px,-12px);
+    line-height: 24px;
+    width: 24px;
+    vertical-align: middle;
+}*/
+
+input {
+    font-family: 'Consolas', Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    color: #757575;
+    padding: .5em;
+    border-radius: 2px;
+    border: 1px solid lightgray;
+    outline: none;
+}
+
+main {
+    background: #fff;
+    margin: 70px auto;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: white;
+    background-color: blue;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+header h1 {
+    display: inline-block;
+    color: white;
+    margin: 1rem auto;
+}
+
+#container {
+    width: 920px;
+    margin: 0 auto;
+    /*background: rgba(33, 63, 100, 0.8);*/
+    background-color: white;
+    /*opacity: 0.8;*/
+/*    border: 1px solid #316390;*/
+    /*margin-left: 204px;*/
+    margin-top: 10px;
+    /*margin-right: 199px;*/
+   /* position: relative;
+    z-index: 1;*/
+}
+
+.generalDiv {
+    width: 919px;
+    margin: 0;
+}
+
+.imgDiv {
+    width: 300px;
+    float: left;
+    /*margin-left: 3px;*/
+}
+
+img {
+    width: 295px;
+}
+
+.infoDiv {
+    width: 400px;
+    float: left;
+    /*margin: 2px;*/
+    margin-left: 7px;
+}
+
+.title {
+    color: blue;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.keyWords {
+    color: grey;
+    font-weight: bold;
+    font-size: 18px;  
+    margin-bottom: 10px;
+}
+
+.description {
+    color: black;
+    font-size: 12px; 
+    margin-bottom: 10px;
+}
+
+.datasource {
+    color: navy;
+    font-size: 14px; 
+}
+
+.priceDiv {
+    width: 200px;
+    float: right;
+    /*margin: 2px;*/
+    margin-left: 7px;
+    /*background-color: aqua;*/
+}
+
+.price{
+    width: 199px;
+    height: 50px;
+    color: white;
+    background-color: grey;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 90px;
+    
+    /*padding-top: 15px;*/
+    /*display: inline-block;*/
+    
+}
+
+.priceNumber{
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.mortGage{
+    /*margin-top: 10px;*/
+    font-size: 14px;
+}
+
+#favBtn {
+    margin-top: 25px;
+    float: right;
+/*    position: relative;
+    z-index: 15;*/
+}
+
+.item {
+    display: flex;
+    font-size: 1rem;
+    border-top: 1px solid rgba(0,0,0,.1);
+    background-color: #fff;
+    transition: all .2s;
+    -webkit-user-select: none;
+    user-select: none;
+    /*padding: 1em;*/
+    align-items: center;
+/*    position: relative;
+    z-index: 10;*/
+}
+
+
+
+.addMore{
+    border: 1px solid #316390;  
+    margin-bottom: 5px;
+    float: right;
+}
+
+
+#form {
+    display: flex;
+    background-color: #FAFAFA;
+    border-top: 1px solid rgba(0,0,0,.1);
+    padding: 10px;
+}
+
+#form input {
+    flex: 1;
+    outline: none;
+    transition: all .2s;
+}
+
+#form input:focus {
+    border: 1px solid #f0db4f;
+}
+
+#form button {
+    margin-left: 10px;
+}

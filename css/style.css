@@ -7,6 +7,10 @@ body {
     width: 100%;
 }
 
+
+
+
+
 .modal {
     display: none;
     position: fixed;
@@ -25,6 +29,7 @@ body {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
+    /*width: 80%;*/
 }
 
 
@@ -32,11 +37,75 @@ body {
     display: none;
 }
 
+#modal-content #favBtnNew {
+    display: none;
+}
+
+#modal-content #showMore {
+    display: none;
+}
+
+#modal-content #newShowMore {
+    display: none;
+}
+
+#modal-content .priceDiv {
+    background-color: none;
+}
 .close {
     color: black;
     float: right;
     font-size: 50px;
     font-weight: bold;
+    /*padding-top: 50% auto;*/
+    position: relative;
+    z-index: 5;
+}
+
+.modal2 {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+}
+
+#modal-content2 {
+    width: 920px;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    /*width: 80%;*/
+}
+
+
+#modal-content2 #favBtn {
+    display: none;
+}
+
+#modal-content2 #favBtnNew {
+    display: none;
+}
+
+#modal-content2 #showMore {
+    display: none;
+}
+
+#modal-content2 #newShowMore {
+    display: none;
+}
+
+.close2 {
+    color: black;
+    float: right;
+    font-size: 50px;
+    font-weight: bold;
+    /*padding-top: 50% auto;*/
     position: relative;
     z-index: 5;
 }
@@ -83,7 +152,7 @@ button:active {
     background-color: rgba(158,158,158,.4);
 }
 
-/*button.icon {
+button.icon {
     border-radius: 50%;
     font-size: 24px;
     height: 32px;
@@ -94,8 +163,8 @@ button:active {
     padding: 0;
     overflow: hidden;
     line-height: normal;
-}*/
-/*
+}
+
 button .material-icons {
     position: absolute;
     top: 50%;
@@ -104,7 +173,7 @@ button .material-icons {
     line-height: 24px;
     width: 24px;
     vertical-align: middle;
-}*/
+}
 
 input {
     font-family: 'Consolas', Arial, Helvetica, sans-serif;
@@ -118,6 +187,7 @@ input {
 
 main {
     background: #fff;
+    /*width: 700px;*/
     margin: 70px auto;
     border-radius: 2px;
     overflow: hidden;
@@ -234,11 +304,19 @@ img {
 }
 
 #favBtn {
-    margin-top: 25px;
+    margin-top: 5px;
     float: right;
 /*    position: relative;
     z-index: 15;*/
 }
+
+#showMore {
+    margin-top: 5px;
+    float: right;
+/*    position: relative;
+    z-index: 15;*/
+}
+
 
 .item {
     display: flex;
@@ -254,13 +332,50 @@ img {
     z-index: 10;*/
 }
 
+.item.completed * {
+    color: lightgray;
+}
 
+.item .checkbox {
+    margin-right: .5rem;
+}
+
+.item .title,
+.item .textfield {
+    margin-right: auto;
+}
+
+.item.completed .title {
+    text-decoration: line-through;
+}
+
+.item.editing .title {
+    display: none;
+}
+
+.item .textfield {
+    display: none;
+}
+
+.item.editing .textfield {
+    display: block;
+}
+
+.item button {
+    /*opacity: 0;*/
+    transition: all .2s;
+}
+
+.item:hover button:not(.checkbox) {
+    opacity: 1;
+}
 
 .addMore{
     border: 1px solid #316390;  
     margin-bottom: 5px;
     float: right;
 }
+
 
 
 #form {

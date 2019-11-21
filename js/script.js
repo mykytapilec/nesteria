@@ -14,11 +14,16 @@ const list = document.getElementById("list");
 const container = document.getElementById("container");
 const itemsNew = document.querySelectorAll(".item");
 
-function request (city, page){
-	console.log(city);
+const btn = addBtn("addMore", "ADD MORE");
+const favModelButton = addBtn("favorBtn","FAVORITIES");
 
-	const get = () => new Promise ((resolve, reject) => {
+const houses = [];
+const favHouses = [];
+console.log(houses);
 
+container.appendChild(favModelButton);
+
+const request = (city, page) => new Promise ((resolve, reject) => {
     const api = `https://cors-anywhere.herokuapp.com/https://api.nestoria.co.uk/api?encoding=json&action=search_listings&country=uk&listing_type=rent&pretty=1&number_of_results=5&place_name=${city}&page=${page}`;
     const request = new XMLHttpRequest();
     request.withCredentails = true;
@@ -28,10 +33,8 @@ function request (city, page){
         reject(Error(request.statusText));
     request.oneerror = (err) => reject(err);
     request.send();
-	});
+});
 
-	return get;
-}
 
 function createElem(tag, props,...children){
 	// console.log("creating elem");
@@ -56,8 +59,8 @@ function createElem(tag, props,...children){
 
 function createList (data, btn = "favBtn", sm = "showMore"){
 						
-	let itemsArr = [];
-	for (let i = 0; i < data.response.listings.length; i++){
+	const itemsArr = [];
+	for (let i = 0; i < data.request.num_res; i++){
 		const showMore = createElem("button", {id:sm, type:"submit"}, "show more");
 		const favBtn = createElem("button", {id:btn, type:"submit"}, "in favorites");
 		// const mortGage = createElem("span", {className:"mortGage"}, "View Your Credit Report");
@@ -72,21 +75,23 @@ function createList (data, btn = "favBtn", sm = "showMore"){
 		const img = createElem("img", {src: data.response.listings[i].img_url});
 		const imgDiv = createElem("div", {className: "imgDiv"}, img);
 		const generalDiv = createElem("div", {className: "generalDiv"}, imgDiv, infoDiv, priceDiv);
-		const container = createElem("div", {className: "container"}, generalDiv);
-		const item = createElem ("li", {className:"item", id: data.request.location}, container);
+		const contain = createElem("div", {className: "contain"}, generalDiv);
+		const item = createElem ("li", {className:"item", id: data.request.location}, contain);
 							
 		// console.log(item);
 
 		itemsArr.push(item);
+		// houses.push(item);
 
 	}
 	// console.log(itemsArr);
+	// console.log(houses);
 	return itemsArr
 }
 
-function addBtn(city){
-	const addBtn = createElem("button", {className:"addMore", type: "submit"}, `ADD MORE FOR ${city}`);
-	return addBtn;
+function addBtn(className, name){
+	return createElem("button", {className: className, type: "submit"}, name);
+	
 }
 
 function circle (length){
@@ -100,7 +105,7 @@ function circle (length){
 function addModelInfo (index, data, a = 0){
 	const copy = createList(data, "favBtnNew", "newShowMore");
 	// console.log(copy);
-	console.log(showMore);
+	// console.log(showMore);
 
 	if(index == 0 && a == false){
 		showMore.onclick = function(){
@@ -162,7 +167,7 @@ function addModelFav (index, data, a = 0){
 
 	const copy = createList(data, "favBtnNew", "newShowMore");
 	// console.log(copy);
-	console.log(favBtn);
+	// console.log(favBtn);
 
 
 	if(index == 0 && a == false){
@@ -184,7 +189,7 @@ function addModelFav (index, data, a = 0){
 			// console.log(favBtnNew);
 		}
 	} else {
-		console.log(a);
+		// console.log(a);
 		favBtn[index + a].onclick = function(){
 			modal.style.display = "block";	
 			modalContent.appendChild(copy[index]);
@@ -219,6 +224,160 @@ function addModelFav (index, data, a = 0){
 // 	}
 // }
 
+function viewOfHouses (data){
+
+
+	// console.log(houses);
+
+	if(houses[0].id !== houses[houses.length - 1].id){
+		for (let i = 0; i < houses.length - +data.request.num_res; i++){
+			// list.removeChild(houses[i]);
+			houses[i].remove()
+		}
+		houses.splice(0, houses.length - +data.request.num_res)
+	} 
+
+
+	for (let i = 0; i < houses.length; i++){
+		list.appendChild(houses[i]);
+	}
+	// console.log(oldCity);
+	// console.log(houses);
+
+
+}
+
+function addFavHouses (){
+	// console.log(favBtn);
+
+	// console.log(houses);
+	// console.log(favHouses);
+
+	for (let i = 0; i < houses.length; i++){
+		favBtn[i].onclick = function (){
+			console.log("fav");
+			console.log(houses[i])
+			localStorage.setItem("favHouses", JSON.stringify(houses[i]))
+			if (localStorage.getItem("favHouses")){
+				favHouses.push (JSON.parse(localStorage.getItem("favHouses")))
+			}
+			console.log(favHouses);
+			// favHouses.push(houses[i]);
+		}	
+	}
+
+}
+
+
+function favModel (){
+	// console.log(houses);
+	// console.log(favHouses);
+	// let arr = [];
+
+	// localStorage.setItem("favHouses", JSON.stringify(favHouses))
+
+	// console.log(localStorage)
+	// if (localStorage.getItem("favHouses")){
+	// 	arr = JSON.parse(localStorage.getItem("favHouses"))
+	// }
+	// console.log(arr);
+
+	// for (let i = 0; i < favHouses.length; i++){
+	// 	modalContent.appendChild(favHouses[i]);	
+	// }
+
+
+	// console.log()
+
+	// localStorage.item = JSON.stringify(favHouses);
+	// console.log(localStorage.item)
+	// const item = JSON.parse(localStorage.item)
+	
+	// console.log(item)
+	// console.log(item[0])
+
+	// for (let i = 0; i < arr.length; i++){
+	// 	modalContent.appendChild(arr[i]);	
+	// }
+
+
+ 	favModelButton.onclick = function(){
+ 		modal.style.display = "block";
+ 	}
+
+
+	span.onclick = function(){
+		modal.style.display = "none";
+				
+	}
+
+	window.onclick = function(event){
+		if(event.target == modal){
+			modal.style.display = "none";
+		}
+	}	
+
+}
+
+function moreInfo(){
+	// console.log(showMore);
+	for (let i = 0; i < houses.length; i++){
+		showMore[i].onclick = function (){
+			console.log("fav");
+			console.log(houses[i])
+			modal2.style.display = "block";	
+			modalContent2.appendChild(houses[i]);
+			span2.onclick = function(){
+				modal2.style.display = "none";
+				houses[i].remove();
+			}	
+		}	
+	}
+
+	window.onclick = function(event){
+		if(event.target == modal){
+			modal.style.display = "none";
+		}
+	}
+
+
+}
+
+function addMore(event){
+	event.preventDefault();
+	let params = event.target.myParam;
+	console.log("add more");
+	request(params[0], ++params[1])
+		.then(
+		nextData => {
+			console.log(nextData);
+			const items = createList(nextData);
+			items.forEach(item => houses.push(item));
+			// console.log(houses);
+			// const btn = addBtn(nextData.request.location);
+
+			viewOfHouses(nextData);
+			addFavHouses()
+			favModel()
+			moreInfo()
+			
+
+			// let num = document.getElementById('list').childNodes.length + +nextData.request.num_res - 1;
+			// console.log(num);
+			// for (let i = 0; i < items.length; i++){
+			// 	list.appendChild(items[i]);
+			// 	console.log(list);
+			// 	// addModel(i, newClientData, 5, num -5);
+			// 	addModelFav(i, nextData, num - nextData.request.num_res);
+			// 	addModelInfo(i, nextData, num - nextData.request.num_res);
+			// }
+
+
+			btn.addEventListener("click", addMore);
+		},
+		).catch("error on next step");
+}
+
 function addItems (event){
 	// console.log(event);
 	event.preventDefault();
@@ -227,65 +386,57 @@ function addItems (event){
 
 	// console.log(changeInputValue);
 	let page = 1
-	const data = request(changeInputValue, page);
-	data().then(
+	request(changeInputValue, page)
+	 .then(
 		data => {
-		 	return data
-		},
-		err => console.error(new Error("mistake!"))
-		).then(clientData =>{
+			console.log(data);
 
-			console.log(clientData);
+			if(data.response.application_response_code == "100"){
+				// console.log("nice");
+				const items = createList(data);
+				items.forEach(item => houses.push(item));
+				// houses.push(items);
+				// console.log(items);
+				console.log(houses);
 
-			function addMore(){
-				event.preventDefault();
-				console.log("add more");
-				const newData = request(changeInputValue, ++page);
-				newData().then(
-					data => {
-					 	return data
-					},
-					err => console.error(new Error("mistake!"))
-					).then(newClientData =>{
-						console.log(newClientData);
-						const items = createList(newClientData);
-						const btn = addBtn(newClientData.request.location);
-						let num = document.getElementById('list').childNodes.length;
-						console.log(num);
-						for (let i = 0; i < items.length; i++){
-							list.appendChild(items[i]);
-							console.log(list);
-							// addModel(i, newClientData, 5, num -5);
-							addModelFav(i, newClientData, num -5);
-							addModelInfo(i, newClientData, num -5);
-						}	
-						btn.addEventListener("click", addMore);
-					});
-			}
 
-			if(clientData.response.application_response_code == "100"){
-				console.log("nice");
-				const items = createList(clientData);
-				console.log(items);
-				const btn = addBtn(clientData.request.location);
-				let num = document.getElementById('list').childNodes.length;
-				console.log(num);
-				for (let i = 0; i < items.length; i++){
-					list.appendChild(items[i]);
-					if (num > 0){
-						addModelFav(i, clientData, num - 5);
-						addModelInfo(i, clientData, num - 5);
-					}
-					addModelFav(i, clientData);
-					addModelInfo(i, clientData);
-				}
+				
+
+				viewOfHouses(data);
+				addFavHouses();
+				favModel()
+				moreInfo()
+
+				// let num = document.getElementById('list').childNodes.length + +data.request.num_res - 1;
+				// console.log(num);
+				// for (let i = 0; i < items.length; i++){
+				// 	list.appendChild(items[i]);
+
+				// 	if (num >=5){
+				// 		addModelFav(i, data, num - data.request.num_res);
+				// 		addModelInfo(i, data, num - data.request.num_res);
+				// 	}
+				// 	addModelFav(i, data);
+				// 	addModelInfo(i, data);
+				// }
+
+
+
+				
 				container.appendChild(btn);
-				console.log(favBtn);
+				btn.myParam = [changeInputValue, page];
+
+
 				btn.addEventListener("click", addMore);
+
+
+
+
 			} else {
 				alert("incorrect name");
 			}
-		});	
+		}
+	 ).catch("error!");	
 	input.value = "";
 
 }

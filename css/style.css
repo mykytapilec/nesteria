@@ -376,6 +376,12 @@ img {
     float: right;
 }
 
+.favorBtn{
+    border: 1px solid #316390;  
+    margin-bottom: 5px;
+    float: left;
+}
+
 
 
 #form {

@@ -50,8 +50,8 @@ const main = (document => {
 			removeFavBtn[i].onclick = function (){
 				superArr.splice(i, 1, "");
 				const anotherArr = superArr.filter(item => item !== "");
-				imc.removeChild(arr[i]);
-				if(!imc.firstChild){
+				ifmc.removeChild(arr[i]);
+				if(!ifmc.firstChild){
 					modalPhrase.style.display = "block";
 				}
 				localStorage.setItem("favHouses", JSON.stringify(anotherArr));
@@ -59,28 +59,26 @@ const main = (document => {
 			}	
 		}
 	}
-
-	function filter(arr){
-		return arr.filter((item, index, self) => index === self.findIndex((t) =>(t.title === item.title)));
-	}
-
+	
 	function addFavHouses(houses, data){
 		let arr = [];
 		const favBtn = document.querySelectorAll("#favBtn");
 		for (let i = 0; i < houses.length; i++){
 			favBtn[i].onclick = function (){
 				modalPhrase.style.display = "none";
-				arr.push(...favHouses);
-				arr.push(houses[i]);
-				const newArr = filter(arr);
-				arr = [];
-				localStorage.setItem("favHouses", JSON.stringify(newArr));
+				const filter = [];
+				for (let j = 0; j < favHouses.length; j++){
+					filter.push(favHouses[j].lister_url);
+				}
+				if(!filter.includes(houses[i].lister_url)){
+					favHouses.push(houses[i]);
+				}
+				localStorage.setItem("favHouses", JSON.stringify(favHouses));
 				favHouses = JSON.parse(localStorage.getItem("favHouses"));
 				const favLi = createList(favHouses, data, "removeFavBtn", "newShowMore", "remove");
-				imc.innerHTML = "";
+				ifmc.innerHTML = "";
 				for( let i = 0; i < favLi.length; i++){
-					imc.appendChild(favLi[i]);
-
+					ifmc.appendChild(favLi[i]);
 				}
 				removeFavHouses(favLi);
 			}
@@ -91,22 +89,16 @@ const main = (document => {
 		const showMore = document.querySelectorAll("#showMore");
 		for (let i = 0; i < houses.length; i++){
 			showMore[i].onclick = function (){
-				modal2.style.display = "block";
+				showModal.style.display = "block";
 				app.className = "fixed";
-				imc2.appendChild(createElem("img", {src: `${houses[i].img_url}`, alt: "", className: "imgModal"}));
-				imc2.appendChild(createElem("span", {className: "titleText"}, `${houses[i].title}` ));
-				span2.onclick = function(){
+				ismc.appendChild(createElem("img", {src: `${houses[i].img_url}`, alt: "", className: "imgModal"}));
+				ismc.appendChild(createElem("span", {className: "titleText"}, `${houses[i].title}` ));
+				showClose.onclick = function(){
 					app.className ="nonFixed";
-					modal2.style.display = "none";
-					imc2.innerHTML = "";	
-				}	
+					showModal.style.display = "none";
+					ismc.innerHTML = "";	
+				}		
 			}	
-		}
-
-		window.onclick = function(event){
-			if(event.target == modal){
-				modal.style.display = "none";
-			}
 		}
 	}
 
@@ -148,6 +140,7 @@ const main = (document => {
 		let page = 1;
 		request(changeInputValue, page)
 		 .then(data => {
+		 		console.log(data)
 				list.innerHTML = "";
 				if(data.response.application_response_code === "100"){
 					houses.push(...data.response.listings);
@@ -168,15 +161,15 @@ const main = (document => {
 		input.value = "";
 	}
 
-	const modal = document.getElementById("myModal");
-	const imc = document.getElementById("inside-model-content");
-	const span = document.getElementsByClassName("close")[0];
+	const favModal = document.getElementById("myFavModal");
+	const ifmc = document.getElementById("inside-fav-modal-content");
+	const favClose = document.getElementsByClassName("favClose")[0];
 
 	const modalPhrase = document.getElementById("modalPhrase");
 
-	const modal2 = document.getElementById("myModal2");
-	const imc2 = document.getElementById("inside-model-content2");
-	const span2 = document.getElementsByClassName("close2")[0];
+	const showModal = document.getElementById("myShowModal");
+	const ismc = document.getElementById("inside-show-model-content");
+	const showClose = document.getElementsByClassName("showClose")[0];
 
 	const app = document.getElementById("app");
 	const form = document.getElementById("form");
@@ -193,25 +186,23 @@ const main = (document => {
 	container.insertBefore(favModelButton, list);
 
 	function main (){
+
 		favModelButton.onclick = function(){
-	 		modal.style.display = "block";
+	 		favModal.style.display = "block";
 	 		app.className = "fixed";
 	 	}
-		span.onclick = function(){
-			modal.style.display = "none";
+
+		favClose.onclick = function(){
+			favModal.style.display = "none";
 			app.className = "nonFixed";	
 		}
-		window.onclick = function(event){
-			if(event.target == modal){
-				modal.style.display = "none";
-			}
-		}	
+
 		if(localStorage.getItem("favHouses")){
-			imc.innerHTML ="";
+			ifmc.innerHTML ="";
 			favHouses = JSON.parse(localStorage.getItem("favHouses"));	
 			const li = createList(favHouses, data = {request: {location:"somePlace"}}, "removeFavBtn", "newShowMore", "remove");
 			for( let i = 0; i < li.length; i++){
-				imc.appendChild(li[i]);
+				ifmc.appendChild(li[i]);
 				modalPhrase.style.display = "none";
 			}
 			removeFavHouses(li);
